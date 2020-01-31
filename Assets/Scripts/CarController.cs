@@ -5,6 +5,8 @@ using UnityEngine.EventSystems;
 
 public class CarController : MonoBehaviour
 {
+	public static CarController Instance = null;
+
     [SerializeField]
     private WheelCollider fl, fr, rl, rr;
     [Space]
@@ -16,7 +18,11 @@ public class CarController : MonoBehaviour
     [SerializeField]
     [Range(10, 100)]
     private int angle = 10;
-    private void Start()
+
+	private void Awake() {
+		Instance = this;
+	}
+	private void Start()
     {
             
     }
@@ -32,4 +38,5 @@ public class CarController : MonoBehaviour
         
 
     }
+
 }
