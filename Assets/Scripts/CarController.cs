@@ -23,8 +23,8 @@ public class CarController : MonoBehaviour
     private void Update()
     {
         float forward = Input.GetAxis("Vertical");
-        rl.motorTorque = forward * speed;
-        rr.motorTorque = forward * speed;
+        rl.motorTorque = 1 * speed;
+        rr.motorTorque = 1 * speed;
         fl.steerAngle = -steer.rotation.z * angle;
         fr.steerAngle = -steer.rotation.z * angle;
         //Debug.Log(steer.rotation.z*angle);
