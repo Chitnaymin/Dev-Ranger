@@ -5,13 +5,40 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
-	public float Offset;
-	public GameObject targetPlayer;
-	private void Start() {
-		
-	}
-	private void Update() {
-		//transform.position = new Vector3(targetPlayer.transform.position.x, targetPlayer.transform.position.y, targetPlayer.transform.position.z+Offset);
-		GetComponent<NavMeshAgent>().SetDestination(targetPlayer.transform.position);
-	}
+    /* [SerializeField]
+     private WheelCollider fl, fr, rl, rr;
+     [Space]
+     [Range(100, 1000)]
+     [SerializeField]
+     private int speed = 100;*/
+    [SerializeField]
+    private Transform player;
+    
+    
+    [SerializeField]
+    private float distance;
+
+    private Vector3 velocity;
+    private Rigidbody rigi;
+    private float speed;
+
+
+    private void Start()
+    {
+        rigi = GetComponent<Rigidbody>();
+        
+    }
+
+    private void Update()
+    {
+        speed = player.gameObject.GetComponent<Rigidbody>().velocity.magnitude;
+        velocity = new Vector3(speed, gameObject.GetComponent<Rigidbody>().velocity.y,speed);
+
+    }
+    private void FixedUpdate()
+    {
+        if (Vector3.Distance(player.position,transform.position) > distance) {
+            rigi.velocity = velocity;
+        }
+    }
 }
