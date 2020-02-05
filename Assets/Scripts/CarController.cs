@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 public class CarController : MonoBehaviour
 {
 	public static CarController Instance = null;
+	public GameObject damageReceiver;
 
     [SerializeField]
     private WheelCollider fl, fr, rl, rr;
@@ -19,6 +20,9 @@ public class CarController : MonoBehaviour
     [Range(10, 100)]
     private int angle = 10;
 
+	private float damage = 10f;
+	private float health = 100f;
+
 	private void Awake() {
 		Instance = this;
 	}
@@ -31,17 +35,30 @@ public class CarController : MonoBehaviour
         float forward = Input.GetAxis("Vertical");
         if(GetComponent<Rigidbody>().velocity.magnitude < 15f)
         {
-            Debug.Log("t");
+            //Debug.Log("t");
             rl.motorTorque = 1 * speed;
             rr.motorTorque = 1 * speed;
         }
         fl.steerAngle = -steer.rotation.z * angle;
         fr.steerAngle = -steer.rotation.z * angle;
-        Debug.Log(steer.rotation.z*angle);
-        //Debug.Log(EventSystem.);
-        
-        
+        //Debug.Log(steer.rotation.z*angle);
+		//Debug.Log(EventSystem.);
 
-    }
-
+		if (Input.GetKey(KeyCode.A)) {
+			if (health >= 0) {
+				health -= damage;
+				DamageReceived();
+			} else {
+				return;
+			}
+		}
+	}
+	public void DamageReceived() {
+		if (health == 0) {
+			damageReceiver.SetActive(false);
+			speed = 100;
+		} else {
+			return;
+		}
+	}
 }
